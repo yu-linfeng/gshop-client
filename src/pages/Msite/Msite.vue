@@ -310,9 +310,18 @@
 
 <script>
   import HeaderTop from '../../components/HeaderTop/HeaderTop'
+  import Swiper from 'swiper'
+  import 'swiper/dist/css/swiper.min.css'
   export default {
-    components: {HeaderTop},
-    comments: {
+    mounted () {  //创建swiper实例对象实现轮播
+      new Swiper('.swiper-container', {
+        loop: true,   //循环轮播
+        pagination: {
+          el: '.swiper-pagination'
+        }
+      })
+    },
+    components: {
       HeaderTop
     }
   }
