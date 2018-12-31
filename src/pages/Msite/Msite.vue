@@ -11,9 +11,9 @@
     </HeaderTop>
     <!--首页导航-->
     <nav class="msite_nav">
-      <div class="swiper-container">
+      <div class="swiper-container" v-if="categorys.length">
         <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="(categorys, index) in categoryArr" :key="index">
+          <div class="swiper-slide" v-for="(categorys, index) in categorysArr" :key="index">
             <a href="javascript:" class="link_to_food" v-for="(category, index) in categorys" :key="index" >
               <div class="food_container">
                 <img :src="baseImageUrl + category.image_url">
@@ -56,30 +56,40 @@
     mounted () {  //创建swiper实例对象实现轮播
       this.$store.dispatch('getCategorys')
 
-      new Swiper('.swiper-container', {
-        loop: true,   //循环轮播
-        pagination: {
-          el: '.swiper-pagination'
-        }
-      })
+
     },
     computed: {
       ...mapState(['address', 'categorys']),
-      categoryArr () {
+      categorysArr () {
         const {categorys} = this
         const arr = []
         let minArr = []
         categorys.forEach(c => {
-          if (minArr.length === 0) {
-            arr.push(minArr)
-          }
-          if (minArr.length === 8) {
-            arr.push(minArr)
+          // 如果当前小数组已经满了, 创建一个新的
+          if(minArr.length===8) {
             minArr = []
           }
+          // 如果minArr是空的, 将小数组保存到大数组中
+          if(minArr.length===0) {
+            arr.push(minArr)
+          }
+          // 将当前分类保存到小数组中
           minArr.push(c)
         })
         return arr
+      }
+    },
+    watch: {
+      categories (value) {  //categorys有数据了，再异步更新界面之前执行
+        //界面更新就立即创建Swiper对象
+        this.$nextTick(() => {  //一旦完成界面更新，立即调用（此条语句写在数据更新之后）
+          new Swiper('.swiper-container', {
+            loop: true,   //循环轮播
+            pagination: {
+              el: '.swiper-pagination'
+            }
+          })
+        })
       }
     },
     components: {
