@@ -18,7 +18,7 @@ export const reqFoodCategorys = () => ajax(`${BASE_URL}/index_category`)
  * @param longitude 经度
  * @param latitude 纬度
  */
-export const reqShops = (longitude, latitude) => ajax(`${BASE_URL}/shops`, {longitude}, {latitude})
+export const reqShops = (longitude, latitude) => ajax(`${BASE_URL}/shops`, {longitude, latitude})
 
 
 

@@ -55,6 +55,7 @@
 
     mounted () {  //创建swiper实例对象实现轮播
       this.$store.dispatch('getCategorys')
+      this.$store.dispatch('getShops')
 
 
     },
