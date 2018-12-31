@@ -1,7 +1,7 @@
 <template>
   <section class="msite">
     <!--首页头部-->
-    <HeaderTop title="成都">
+    <HeaderTop :title="address.name">
       <span class="header_search" slot="left">
         <i class="iconfont icon-sousuo"></i>
       </span>
@@ -130,11 +130,13 @@
 </template>
 
 <script>
+
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
 
   import ShopList from '../../components/ShopList/ShopList'
   import HeaderTop from '../../components/HeaderTop/HeaderTop'
+  import {mapState} from 'vuex'
 
   export default {
     mounted () {  //创建swiper实例对象实现轮播
@@ -144,6 +146,9 @@
           el: '.swiper-pagination'
         }
       })
+    },
+    computed: {
+      ...mapState(['address'])
     },
     components: {
       HeaderTop,
